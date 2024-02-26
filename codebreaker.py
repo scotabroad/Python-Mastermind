@@ -111,20 +111,7 @@ class OptimalBreaker(CodeBreaker):
         guess = []
         guess_pool = self.minimax(answers)
         if self.attempt == 1:
-            if with_replacement:
-                #The following provides best entropy
-                if pegs % 2 == 0:
-                    half1 = [colors[0] for x in range(int(pegs/2))] 
-                    half2 = [colors[1] for x in range(int(pegs/2))]
-                    guess = [y for x in [half1, half2] for y in x]
-                elif (pegs % 2 == 1) and len(colors) > 1:
-                    half1 = [colors[0] for x in range(int(pegs/2))] 
-                    half2 = [colors[1] for x in range(int(pegs/2))]
-                    guess = [colors[0]] + [y for x in [half1, half2] for y in x]
-                else:
-                    guess = [colors[0]]
-            else:
-                guess = list(answers[0])
+            guess = list(guess_pool[0])
         else:
             if len(self.knuth_codes) > 0:
                 for code in guess_pool:
