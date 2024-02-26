@@ -24,7 +24,6 @@ class HumanMaker(CodeMaker):
         self.code = code
 
     def make_clue(self, clue, guess, answers):
-        #This is pseudocode... maybe use globals?
         answers.remove(tuple(guess))
         return clue, answers
 
@@ -36,14 +35,18 @@ class RandomMaker(CodeMaker):
     def make_clue(self, guess, answers):
         correct = 0
         wrong = 0
-        answer_copy = [x for x in self.code]
+        guess_copy = []
+        code_copy = []
         for i in range(len(guess)):
-            if guess[i] in answer_copy:
-                if guess[i] == self.code[i]:
-                    correct += 1
-                else:
-                    wrong += 1
-                answer_copy.remove(guess[i])
+            if guess[i] == self.code[i]:
+                correct += 1
+            else:
+                guess_copy.append(guess[i])
+                code_copy.append(self.code[i])
+        for i in range(len(guess_copy)):
+            if guess_copy[i] in code_copy:
+                wrong += 1
+                code_copy.remove(guess_copy[i])
         clue = (correct, wrong)
         answers.remove(tuple(guess))
         return clue, answers
@@ -62,14 +65,18 @@ class AdversarialMaker(CodeMaker):
         for answer in answers:
             correct = 0
             wrong = 0
-            answer_copy = [x for x in answer]
+            guess_copy = []
+            answer_copy = []
             for i in range(len(guess)):
-                if guess[i] in answer_copy:
-                    if guess[i] == answer[i]:
-                        correct += 1
-                    else:
-                        wrong += 1
-                    answer_copy.remove(guess[i])
+                if guess[i] == answer[i]:
+                    correct += 1
+                else:
+                    guess_copy.append(guess[i])
+                    answer_copy.append(answer[i])
+            for i in range(len(guess_copy)):
+                if guess_copy[i] in answer_copy:
+                    wrong += 1
+                    answer_copy.remove(guess_copy[i])
             clue = (correct, wrong)
 
             if clue in answer_pools:
