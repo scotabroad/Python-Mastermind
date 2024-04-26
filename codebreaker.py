@@ -1,4 +1,4 @@
-import random
+import secrets
 
 #Generic class
 class CodeBreaker():
@@ -36,7 +36,7 @@ class HumanBreaker(CodeBreaker):
 class RandomBreaker(CodeBreaker):
     #Selects a random answer from list of answers that hasn't been guessed
     def make_guess(self, pegs, colors, answers, with_replacement):
-        guess = list(random.choice(answers))
+        guess = list(secrets.choice(answers))
         self.previous_guesses[self.attempt] = guess
         return guess
 
