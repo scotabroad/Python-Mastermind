@@ -1,4 +1,4 @@
-import random
+import secrets
 
 #Generic class
 class CodeMaker():
@@ -30,7 +30,7 @@ class HumanMaker(CodeMaker):
 class RandomMaker(CodeMaker):
     #Selects a random answer from list of answers to be the code
     def make_code(self, answers):
-        self.code = list(random.choice(answers))
+        self.code = list(secrets.choice(answers))
 
     def make_clue(self, guess, answers):
         correct = 0
